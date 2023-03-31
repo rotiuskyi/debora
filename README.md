@@ -1,5 +1,17 @@
 # Gull
 
+Elixir/Phoenix (backend) and React (frontend) application.
+
+## React
+
+React app stuff placed to `webui` directory. To get started developing go to that directory and run:
+```
+npm i
+```
+Take a look at `webui/package.json` for available `scripts`.
+
+## Phoenix
+
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
@@ -9,7 +21,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Learn more
+### Learn more
 
   * Official website: https://www.phoenixframework.org/
   * Guides: https://hexdocs.pm/phoenix/overview.html
