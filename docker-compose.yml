@@ -10,7 +10,8 @@ services:
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
     ports:
-      - ${PGPORT}:${PGPORT}
+      - ${PGPORT}:5432
+
   # pgadmin:
   #   image: dpage/pgadmin4:6.15
   #   container_name: ${PGDATABASE}_ui
@@ -20,6 +21,7 @@ services:
   #     PGADMIN_DEFAULT_PASSWORD: ${PGPASSWORD}
   #   ports:
   #     - ${PGADMIN_PORT}:80
+
   nginx:
     image: nginx
     container_name: gull_nginx

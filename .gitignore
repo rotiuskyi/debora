@@ -27,6 +27,9 @@ gull-*.tar
 
 # Environment variables
 .env
+dev.env
+test.env
+prod.env
 
 # Certificates and keys
 priv/cert/

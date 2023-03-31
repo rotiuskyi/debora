@@ -11,6 +11,18 @@ config :gull,
   ecto_repos: [Gull.Repo],
   generators: [binary_id: true]
 
+# Configure your database
+config :gull, Gull.Repo,
+  database: System.get_env("PGDATABASE"),
+  port: System.get_env("PGPORT"),
+  username: System.get_env("PGUSER"),
+  password: System.get_env("PGPASSWORD")
+
+# Configure Google OAth/Opend ID Connect
+config :gull,
+  client_id: System.get_env("CLIENT_ID"),
+  client_secret: System.get_env("CLIENT_SECRET")
+
 # Configures the endpoint
 config :gull, GullWeb.Endpoint,
   url: [host: "localhost"],
