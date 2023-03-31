@@ -26,5 +26,5 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./priv/cert:/etc/nginx/ssl
-      - ./webui/app/dist:/usr/share/nginx/html
+      - ./webui/dist:/usr/share/nginx/html
     network_mode: host
