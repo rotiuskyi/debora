@@ -15,7 +15,8 @@ defmodule Gull.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Gull.PubSub},
       # Start the Endpoint (http/https)
-      GullWeb.Endpoint
+      GullWeb.Endpoint,
+      GullWeb.Services.GoogleKeysService
       # Start a worker by calling: Gull.Worker.start_link(arg)
       # {Gull.Worker, arg}
     ]

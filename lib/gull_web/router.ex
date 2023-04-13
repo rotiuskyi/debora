@@ -9,6 +9,8 @@ defmodule GullWeb.Router do
     pipe_through :api
 
     get "/", DefaultController, :index
+    get "/auth", AuthController, :code_flow
+    get "/user/profile", UserController, :profile
   end
 
   # Enable LiveDashboard in development
