@@ -8,6 +8,7 @@ import Layout from "./layout/Layout";
 import IndexPage from "./index/IndexPage";
 import CurrBoard from "./board/CurrBoard";
 import BoardList from "./board/BoardList";
+import IdTokenPage from "./auth/IdTokenPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route element={<AuthLayout />}>
           <Route path={Path.Login} element={<LoginPage />} />
         </Route>
+        <Route path={Path.Auth} element={<IdTokenPage />} />
 
         <Route element={<Layout />}>
           <Route path={Path.Index} element={<IndexPage />} />
