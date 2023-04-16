@@ -7,30 +7,30 @@
 # General application configuration
 import Config
 
-config :gull,
-  ecto_repos: [Gull.Repo],
+config :debora,
+  ecto_repos: [Debora.Repo],
   generators: [binary_id: true]
 
 # Configure your database
-config :gull, Gull.Repo,
+config :debora, Debora.Repo,
   database: System.get_env("PGDATABASE"),
   port: System.get_env("PGPORT"),
   username: System.get_env("PGUSER"),
   password: System.get_env("PGPASSWORD")
 
 # Configure Google OAth/Opend ID Connect
-config :gull,
+config :debora,
   client_id: System.get_env("CLIENT_ID"),
   client_secret: System.get_env("CLIENT_SECRET")
 
 # Configures the endpoint
-config :gull, GullWeb.Endpoint,
+config :debora, DeboraWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [json: GullWeb.ErrorJSON],
+    formats: [json: DeboraWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Gull.PubSub,
+  pubsub_server: Debora.PubSub,
   live_view: [signing_salt: "PHaumOHZ"]
 
 # Configures Elixir's Logger

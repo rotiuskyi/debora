@@ -1,9 +1,9 @@
-defmodule GullWeb.AuthController do
+defmodule DeboraWeb.AuthController do
   use Phoenix.Controller
 
   def code_flow(conn, %{"code" => code}) do
-    client_id = Application.get_env(:gull, :client_id)
-    client_secret = Application.get_env(:gull, :client_secret)
+    client_id = Application.get_env(:debora, :client_id)
+    client_secret = Application.get_env(:debora, :client_secret)
 
     {:ok, response} =
       HTTPoison.post(

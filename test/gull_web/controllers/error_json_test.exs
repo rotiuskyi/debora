@@ -1,12 +1,12 @@
-defmodule GullWeb.ErrorJSONTest do
-  use GullWeb.ConnCase, async: true
+defmodule DeboraWeb.ErrorJSONTest do
+  use DeboraWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert GullWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert DeboraWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
   end
 
   test "renders 500" do
-    assert GullWeb.ErrorJSON.render("500.json", %{}) ==
+    assert DeboraWeb.ErrorJSON.render("500.json", %{}) ==
              %{errors: %{detail: "Internal Server Error"}}
   end
 end

@@ -1,12 +1,12 @@
-defmodule GullWeb do
+defmodule DeboraWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use GullWeb, :controller
-      use GullWeb, :html
+      use DeboraWeb, :controller
+      use DeboraWeb, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -39,10 +39,10 @@ defmodule GullWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: GullWeb.Layouts]
+        layouts: [html: DeboraWeb.Layouts]
 
       import Plug.Conn
-      import GullWeb.Gettext
+      import DeboraWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -51,9 +51,9 @@ defmodule GullWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: GullWeb.Endpoint,
-        router: GullWeb.Router,
-        statics: GullWeb.static_paths()
+        endpoint: DeboraWeb.Endpoint,
+        router: DeboraWeb.Router,
+        statics: DeboraWeb.static_paths()
     end
   end
 

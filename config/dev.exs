@@ -1,7 +1,7 @@
 import Config
 
 # Configure your database
-config :gull, Gull.Repo,
+config :debora, Debora.Repo,
   hostname: "localhost",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
@@ -13,7 +13,7 @@ config :gull, Gull.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with esbuild to bundle .js and .css sources.
-config :gull, GullWeb.Endpoint,
+config :debora, DeboraWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
@@ -47,7 +47,7 @@ config :gull, GullWeb.Endpoint,
 # different ports.
 
 # Enable dev routes for dashboard and mailbox
-config :gull, dev_routes: true
+config :debora, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

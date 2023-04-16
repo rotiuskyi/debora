@@ -1,7 +1,7 @@
 const IndexPage = () => {
   return (
     <div>
-      <h1>Welcome to Gull UI!</h1>
+      <h1>Welcome to Debora UI!</h1>
     </div>
   )
 };

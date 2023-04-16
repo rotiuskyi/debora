@@ -1,4 +1,4 @@
-defmodule GullWeb.EchoSocket do
+defmodule DeboraWeb.EchoSocket do
   @behaviour Phoenix.Socket.Transport
 
   def child_spec(_opts) do

@@ -1,17 +1,17 @@
-defmodule GullWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :gull
+defmodule DeboraWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :debora
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_gull_key",
+    key: "_debora_key",
     signing_salt: "fiT6Cf0t",
     same_site: "Lax"
   ]
 
-  socket "/", GullWeb.EchoSocket, websocket: true, longpoll: false
+  socket "/", DeboraWeb.EchoSocket, websocket: true, longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
@@ -21,15 +21,15 @@ defmodule GullWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :gull,
+    from: :debora,
     gzip: false,
-    only: GullWeb.static_paths()
+    only: DeboraWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :gull
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :debora
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -47,5 +47,5 @@ defmodule GullWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug GullWeb.Router
+  plug DeboraWeb.Router
 end

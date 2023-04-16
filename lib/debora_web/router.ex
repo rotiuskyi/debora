@@ -1,11 +1,11 @@
-defmodule GullWeb.Router do
-  use GullWeb, :router
+defmodule DeboraWeb.Router do
+  use DeboraWeb, :router
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", GullWeb do
+  scope "/api", DeboraWeb do
     pipe_through :api
 
     get "/", DefaultController, :index
@@ -14,7 +14,7 @@ defmodule GullWeb.Router do
   end
 
   # Enable LiveDashboard in development
-  if Application.compile_env(:gull, :dev_routes) do
+  if Application.compile_env(:debora, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
     # it behind authentication and allow only admins to access it.
     # If your application does not have an admins-only section yet,
@@ -25,7 +25,7 @@ defmodule GullWeb.Router do
     scope "/dev" do
       pipe_through [:fetch_session, :protect_from_forgery]
 
-      live_dashboard "/dashboard", metrics: GullWeb.Telemetry
+      live_dashboard "/dashboard", metrics: DeboraWeb.Telemetry
     end
   end
 end

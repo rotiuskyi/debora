@@ -1,4 +1,4 @@
-# Gull
+# Debora
 
 Elixir/Phoenix (backend) and React (frontend) application.
 

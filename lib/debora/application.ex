@@ -1,4 +1,4 @@
-defmodule Gull.Application do
+defmodule Debora.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -9,21 +9,21 @@ defmodule Gull.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      GullWeb.Telemetry,
+      DeboraWeb.Telemetry,
       # Start the Ecto repository
-      Gull.Repo,
+      Debora.Repo,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Gull.PubSub},
+      {Phoenix.PubSub, name: Debora.PubSub},
       # Start the Endpoint (http/https)
-      GullWeb.Endpoint,
-      GullWeb.Services.GoogleKeysService
-      # Start a worker by calling: Gull.Worker.start_link(arg)
-      # {Gull.Worker, arg}
+      DeboraWeb.Endpoint,
+      DeboraWeb.Services.GoogleKeysService
+      # Start a worker by calling: Debora.Worker.start_link(arg)
+      # {Debora.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Gull.Supervisor]
+    opts = [strategy: :one_for_one, name: Debora.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -31,7 +31,7 @@ defmodule Gull.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    GullWeb.Endpoint.config_change(changed, removed)
+    DeboraWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

@@ -1,6 +1,6 @@
-defmodule GullWeb.UserController do
+defmodule DeboraWeb.UserController do
   use Phoenix.Controller
-  alias GullWeb.Services.GoogleKeysService
+  alias DeboraWeb.Services.GoogleKeysService
 
   def profile(conn, _) do
     [authorization] = Plug.Conn.get_req_header(conn, "authorization")
