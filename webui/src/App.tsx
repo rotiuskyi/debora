@@ -16,8 +16,8 @@ const App = () => {
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path={Path.Login} element={<LoginPage />} />
+          <Route path={Path.Auth} element={<IdTokenPage />} />
         </Route>
-        <Route path={Path.Auth} element={<IdTokenPage />} />
 
         <Route element={<Layout />}>
           <Route path={Path.Index} element={<IndexPage />} />
