@@ -10,7 +10,7 @@ defmodule DeboraWeb.Router do
 
     get "/", DefaultController, :index
     get "/auth", AuthController, :code_flow
-    get "/user/profile", UserController, :profile
+    get "/auth/verify", AuthController, :verify_token
   end
 
   # Enable LiveDashboard in development

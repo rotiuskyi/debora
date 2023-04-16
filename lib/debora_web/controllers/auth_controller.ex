@@ -1,5 +1,6 @@
 defmodule DeboraWeb.AuthController do
   use Phoenix.Controller
+  alias DeboraWeb.Services.GoogleKeysService
 
   def code_flow(conn, %{"code" => code}) do
     client_id = Application.get_env(:debora, :client_id)
@@ -29,5 +30,19 @@ defmodule DeboraWeb.AuthController do
 
   def code_flow(conn, _) do
     Plug.Conn.resp(conn, 400, "Bad Request.")
+  end
+
+  def verify_token(conn, _) do
+    [authorization] = Plug.Conn.get_req_header(conn, "authorization")
+    [_, id_token] = String.split(authorization, "Bearer ")
+
+    protected = JOSE.JWT.peek_protected(id_token)
+    {_, %{"kid" => kid}} = JOSE.JWS.to_map(protected)
+    jwk = GoogleKeysService.fetchJWK(kid)
+
+    {true, %JOSE.JWT{fields: fields}, _} = JOSE.JWT.verify(jwk, id_token)
+    {:ok, jwtJson} = Jason.encode(fields)
+
+    text(conn, jwtJson)
   end
 end

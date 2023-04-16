@@ -32,5 +32,5 @@ export default LoginPage;
 
 function handleLoginWithGoogle(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
-  window.open(googleOAthUrl);
+  window.location.replace(googleOAthUrl);
 }
