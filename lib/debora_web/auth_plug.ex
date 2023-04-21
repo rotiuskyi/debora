@@ -3,7 +3,7 @@ defmodule DeboraWeb.AuthPlug do
 
   alias Plug.Conn
   alias JOSE.{JWT, JWS}
-  alias DeboraWeb.Services.GoogleKeysService
+  alias DeboraWeb.GoogleKeysService
 
   def init(opts), do: opts
 

@@ -1,6 +1,6 @@
-defmodule DeboraWeb.Services.GoogleKeysService do
+defmodule DeboraWeb.GoogleKeysService do
   use Agent
-  alias DeboraWeb.Services.GoogleKeysService
+  alias DeboraWeb.GoogleKeysService
 
   @google_keys_url "https://www.googleapis.com/oauth2/v3/certs"
   @valid_till "valid_till"

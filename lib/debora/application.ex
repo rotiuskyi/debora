@@ -14,9 +14,9 @@ defmodule Debora.Application do
       Debora.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Debora.PubSub},
+      DeboraWeb.GoogleKeysService,
       # Start the Endpoint (http/https)
-      DeboraWeb.Endpoint,
-      DeboraWeb.Services.GoogleKeysService
+      DeboraWeb.Endpoint
       # Start a worker by calling: Debora.Worker.start_link(arg)
       # {Debora.Worker, arg}
     ]
