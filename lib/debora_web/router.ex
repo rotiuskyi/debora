@@ -5,12 +5,22 @@ defmodule DeboraWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug DeboraWeb.AuthPlug
+  end
+
   scope "/api", DeboraWeb do
     pipe_through :api
 
     get "/", DefaultController, :index
     get "/auth", AuthController, :code_flow
     get "/auth/verify", AuthController, :verify_token
+
+    scope "/board" do
+      pipe_through :auth
+
+      get "/", BoardController, :show
+    end
   end
 
   # Enable LiveDashboard in development
