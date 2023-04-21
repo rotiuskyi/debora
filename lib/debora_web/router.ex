@@ -2,24 +2,24 @@ defmodule DeboraWeb.Router do
   use DeboraWeb, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   pipeline :auth do
-    plug DeboraWeb.AuthPlug
+    plug(DeboraWeb.AuthPlug)
   end
 
   scope "/api", DeboraWeb do
-    pipe_through :api
+    pipe_through(:api)
 
-    get "/", DefaultController, :index
-    get "/auth", AuthController, :code_flow
-    get "/auth/verify", AuthController, :verify_token
+    get("/", DefaultController, :index)
+    get("/auth", AuthController, :code_flow)
+    get("/auth/user", AuthController, :user_claims)
 
     scope "/board" do
-      pipe_through :auth
+      pipe_through(:auth)
 
-      get "/", BoardController, :show
+      get("/", BoardController, :show)
     end
   end
 
@@ -33,9 +33,9 @@ defmodule DeboraWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through([:fetch_session, :protect_from_forgery])
 
-      live_dashboard "/dashboard", metrics: DeboraWeb.Telemetry
+      live_dashboard("/dashboard", metrics: DeboraWeb.Telemetry)
     end
   end
 end

@@ -1,6 +1,7 @@
 defmodule DeboraWeb.AuthController do
   use Phoenix.Controller
-  alias DeboraWeb.Services.GoogleKeysService
+  alias Plug.Conn
+  alias DeboraWeb.AuthPlug
 
   def code_flow(conn, %{"code" => code}) do
     client_id = Application.get_env(:debora, :client_id)
@@ -24,25 +25,15 @@ defmodule DeboraWeb.AuthController do
     {:ok, %{"id_token" => id_token}} = Jason.decode(body)
 
     conn
-    |> Plug.Conn.resp(:found, "")
-    |> Plug.Conn.put_resp_header("location", "https://localhost/auth?id_token=#{id_token}")
+    |> Conn.resp(:found, "")
+    |> Conn.put_resp_header("location", "https://localhost/auth?id_token=#{id_token}")
   end
 
   def code_flow(conn, _) do
-    Plug.Conn.resp(conn, 400, "Bad Request.")
+    Conn.send_resp(conn, 400, %{message: "Bad Request."} |> Jason.encode!())
   end
 
-  def verify_token(conn, _) do
-    [authorization] = Plug.Conn.get_req_header(conn, "authorization")
-    [_, id_token] = String.split(authorization, "Bearer ")
-
-    protected = JOSE.JWT.peek_protected(id_token)
-    {_, %{"kid" => kid}} = JOSE.JWS.to_map(protected)
-    jwk = GoogleKeysService.fetchJWK(kid)
-
-    {true, %JOSE.JWT{fields: fields}, _} = JOSE.JWT.verify(jwk, id_token)
-    {:ok, jwtJson} = Jason.encode(fields)
-
-    text(conn, jwtJson)
+  def user_claims(conn, _) do
+    AuthPlug.call(conn, respond_with_jwt_claims: true)
   end
 end

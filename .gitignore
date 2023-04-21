@@ -33,3 +33,7 @@ debora-*.tar
 
 # Certificates and keys
 priv/cert/
+
+# IDE and plugin files
+.elixir_ls/
+.vscode
