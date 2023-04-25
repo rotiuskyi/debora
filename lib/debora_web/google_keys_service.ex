@@ -48,35 +48,46 @@ defmodule DeboraWeb.GoogleKeysService do
 
     {:ok, %{@keys => keys}} = Jason.decode(body)
 
-    %{"Cache-Control" => cache_control, "Age" => age} =
-      headersList
-      |> Enum.filter(fn {key, _} -> key == "Cache-Control" or key == "Age" end)
-      |> Enum.into(%{})
-
-    [_, max_age] =
-      cache_control
-      |> String.split(",")
-      |> Enum.find(fn str -> String.contains?(str, "max-age") end)
-      |> String.trim()
-      |> String.split("=")
-
-    {max_age_int, _} = Integer.parse(max_age)
-    {age_int, _} = Integer.parse(age)
-    seconds_left = max_age_int - age_int
-    now = DateTime.utc_now()
-    valid_till = DateTime.add(now, seconds_left, :second)
-
     :ok =
       Agent.update(
         GoogleKeysService,
         fn _ ->
           %{
-            @valid_till => valid_till,
+            @valid_till => get_valid_till_from(headersList),
             @keys => keys
           }
         end
       )
 
     keys
+  end
+
+  defp get_valid_till_from(headers) do
+    seconds_left =
+      with %{"Cache-Control" => cache_control, "Age" => age} <-
+             headers
+             |> Enum.filter(fn {key, _} -> key == "Cache-Control" or key == "Age" end)
+             |> Enum.into(%{}),
+           [_, max_age] <-
+             cache_control
+             |> String.split(",")
+             |> Enum.find(fn str -> String.contains?(str, "max-age") end)
+             |> String.trim()
+             |> String.split("="),
+           {max_age_int, _} <- Integer.parse(max_age),
+           {age_int, _} <- Integer.parse(age) do
+        {:ok, max_age_int - age_int}
+      end
+
+    now = DateTime.utc_now()
+
+    case seconds_left do
+      {:ok, seconds} ->
+        DateTime.add(now, seconds, :second)
+
+      _ ->
+        IO.warn("Failed to get Google keys expire time.")
+        now
+    end
   end
 end
