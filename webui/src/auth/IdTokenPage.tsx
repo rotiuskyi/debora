@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
-import { getPathToReturn, setIdToken, setIdTokenPayload } from "./authStorage";
+import { getPathToReturn, setIdToken, setAccount } from "./authStorage";
 
 const IdTokenPage = () => {
   const pathToReturn = getPathToReturn();
   const [params, setParams] = useSearchParams();
 
-  const [loadingPayload, setLoadingPayload] = useState(true);
+  const [loadingAccount, setLoadingAccount] = useState(true);
   useEffect(() => {
     // get the idToken
     const idToken = params.get("id_token");
     // then remove it from the url
     setParams();
-    fetch("https://localhost/api/auth/user", {
+    fetch("https://localhost/api/auth/account", {
       headers: { "Authorization": `Bearer ${idToken}` }
     })
       .then(res => res.text())
-      .then(payload => {
+      .then(account => {
         setIdToken(idToken!);
-        setIdTokenPayload(payload);
+        setAccount(account);
       })
-      .then(() => setLoadingPayload(false))
+      .then(() => setLoadingAccount(false))
   }, []);
 
-  if (loadingPayload) {
+  if (loadingAccount) {
     return <div>Loading...</div>
   }
   return (

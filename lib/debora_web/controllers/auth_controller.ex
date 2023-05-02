@@ -33,7 +33,7 @@ defmodule DeboraWeb.AuthController do
     Conn.send_resp(conn, 400, %{message: "Bad Request."} |> Jason.encode!())
   end
 
-  def user_claims(conn, _) do
-    AuthPlug.call(conn, respond_with_jwt_claims: true)
+  def account(conn, _) do
+    AuthPlug.call(conn, create_account_or_return_existing: true)
   end
 end

@@ -1,13 +1,12 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Path } from "../routePath";
-import { useAuth } from "./authContext";
-import { getIdTokenPayload } from "./authStorage";
+import { getAccount } from "./authStorage";
 
 const AuthGuard = () => {
-  const userInfo = getIdTokenPayload();
+  const account = getAccount();
   const location = useLocation();
 
-  if (!userInfo) {
+  if (!account?.user_email) {
     // Redirect them to the login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience

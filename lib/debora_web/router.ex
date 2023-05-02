@@ -14,9 +14,9 @@ defmodule DeboraWeb.Router do
 
     get "/", DefaultController, :index
     get "/auth", AuthController, :code_flow
-    get "/auth/user", AuthController, :user_claims
+    get "/auth/account", AuthController, :account
 
-    scope "/board" do
+    scope "/boards" do
       pipe_through :auth
 
       get "/", BoardController, :show
