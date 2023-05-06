@@ -19,7 +19,8 @@ defmodule DeboraWeb.Router do
     scope "/boards" do
       pipe_through :auth
 
-      get "/", BoardController, :show
+      get "/", BoardController, :all
+      post "/", BoardController, :create
     end
   end
 
