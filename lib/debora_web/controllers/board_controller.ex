@@ -17,7 +17,8 @@ defmodule DeboraWeb.BoardController do
         on: b.id == ab.board_id,
         join: a in Account,
         on: ab.account_id == a.id,
-        where: a.issuer == ^iss and a.user_email == ^email
+        where: a.issuer == ^iss and a.user_email == ^email,
+        preload: [:devices]
       )
       |> Repo.all()
       |> Jason.encode!()
