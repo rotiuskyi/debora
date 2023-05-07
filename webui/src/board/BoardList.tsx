@@ -13,9 +13,9 @@ const BoardList = () => {
       .catch(err => console.error(err));
   }, []);
 
-  const [name, setName] = useState("");
-  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+  const [title, setTitle] = useState("");
+  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
   };
 
   const handleSubmit = (event: FormEvent) => {
@@ -27,11 +27,11 @@ const BoardList = () => {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${getIdToken()}`
       },
-      body: JSON.stringify({ name })
+      body: JSON.stringify({ title })
     })
       .then(res => res.json())
       .then(newBoard => console.dir(newBoard))
-      .catch(() => console.error("Failed to create new board."));
+      .catch(err => console.error(err));
   };
 
   return (
@@ -40,8 +40,8 @@ const BoardList = () => {
 
       <form onSubmit={handleSubmit}>
         <label>
-          Board Name
-          <input value={name} onChange={handleNameChange} />
+          Board Title
+          <input value={title} onChange={handleTitleChange} />
         </label>
         <button>Create Board</button>
       </form>

@@ -11,10 +11,11 @@ defmodule DeboraWeb.AuthPlug do
 
   def call(conn, opts \\ []) do
     with {:ok, token} <- get_bearer_token(conn),
-         {:ok, claims} <- verify_token(token) do
+         {:ok, claims} <- verify_token(token),
+         %{"sub" => sub} <- claims do
       case opts do
         [] ->
-          Plug.Conn.assign(conn, :auth_context, claims)
+          Plug.Conn.assign(conn, :auth_subject, sub)
 
         create_account_or_return_existing: true ->
           create_account_or_return_existing(conn, claims)
@@ -45,15 +46,17 @@ defmodule DeboraWeb.AuthPlug do
   end
 
   defp create_account_or_return_existing(conn, %{
+         "sub" => subject,
          "iss" => issuer,
          "name" => user_name,
          "email" => user_email,
          "picture" => picture
        }) do
     query_result =
-      case Repo.one(Account, where: [user_email: user_email]) do
+      case Repo.one(Account, where: [subject: subject]) do
         nil ->
           Repo.insert(%Account{
+            subject: subject,
             issuer: issuer,
             user_name: user_name,
             user_email: user_email,

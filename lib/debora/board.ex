@@ -3,7 +3,7 @@ defmodule Debora.Board do
 
   @derive {Jason.Encoder, except: [:__meta__]}
   schema "boards" do
-    field :name, :string
+    field :title, :string
     has_many :devices, Debora.Device
   end
 end
