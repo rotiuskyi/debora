@@ -29,13 +29,13 @@ defmodule DeboraWeb.BoardController do
 
   def create(conn, params) do
     subject = conn.assigns.auth_subject
-    %{"title" => title} = params
 
     {:ok, board} =
       Repo.transaction(fn ->
         board =
-          Repo.preload(%Board{title: title}, [:devices])
+          Board.changeset(%Board{}, params)
           |> Repo.insert!()
+          |> Repo.preload([:devices])
 
         %Board{id: board_id} = board
         Repo.insert!(%AccountBoard{account_subject: subject, board_id: board_id})
