@@ -21,6 +21,7 @@ defmodule DeboraWeb.Router do
 
       get "/", BoardController, :all
       post "/", BoardController, :create
+      delete "/:id", BoardController, :delete
     end
   end
 

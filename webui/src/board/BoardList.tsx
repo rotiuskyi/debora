@@ -1,7 +1,9 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 import { getIdToken } from "../auth/authStorage";
 
 const BoardList = () => {
+  const [boards, setBoards] = useState<any[]>([]);
+
   useEffect(() => {
     fetch("/api/boards", {
       headers: {
@@ -9,7 +11,7 @@ const BoardList = () => {
       }
     })
       .then(res => res.json())
-      .then(data => console.dir(data))
+      .then(boards => setBoards(boards))
       .catch(err => console.error(err));
   }, []);
 
@@ -30,7 +32,21 @@ const BoardList = () => {
       body: JSON.stringify({ title })
     })
       .then(res => res.json())
-      .then(newBoard => console.dir(newBoard))
+      .then(newBoard => setBoards(boards => [...boards, newBoard]))
+      .catch(err => console.error(err));
+  };
+
+  const handleDelete = (event: MouseEvent) => {
+    const btn = event.target as HTMLButtonElement;
+
+    fetch(`/api/boards/${btn.name}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${getIdToken()}`
+      },
+    })
+      .then(res => res.json())
+      .then(() => setBoards(boards.filter(board => board.id != btn.name)))
       .catch(err => console.error(err));
   };
 
@@ -45,6 +61,19 @@ const BoardList = () => {
         </label>
         <button>Create Board</button>
       </form>
+
+      <ul>
+        {boards.map((board) => (
+          <li key={(board as any).id}>
+            <pre>
+              <code>
+                {JSON.stringify(board)}
+              </code>
+            </pre>
+            <button name={(board as any).id} onClick={handleDelete}>Delete</button>
+          </li>)
+        )}
+      </ul>
     </div>
   )
 };

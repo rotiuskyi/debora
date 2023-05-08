@@ -32,11 +32,7 @@ defmodule DeboraWeb.BoardController do
 
     {:ok, board} =
       Repo.transaction(fn ->
-        board =
-          Board.changeset(%Board{}, params)
-          |> Repo.insert!()
-          |> Repo.preload([:devices])
-
+        board = Board.changeset(%Board{devices: []}, params) |> Repo.insert!()
         %Board{id: board_id} = board
         Repo.insert!(%AccountBoard{account_subject: subject, board_id: board_id})
 
@@ -44,5 +40,22 @@ defmodule DeboraWeb.BoardController do
       end)
 
     send_resp(conn, 201, board)
+  end
+
+  def delete(conn, %{"id" => idParam}) do
+    id = String.to_integer(idParam)
+
+    {:ok, board} =
+      Repo.transaction(fn ->
+        from(ab in AccountBoard, where: ab.board_id == ^id)
+        |> Repo.one!()
+        |> Repo.delete!()
+
+        %Board{id: id, devices: []}
+        |> Repo.delete!()
+        |> Jason.encode!()
+      end)
+
+    send_resp(conn, 200, board)
   end
 end
