@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import { Path } from "./routePath";
-import { AuthProvider } from "./auth/authContext";
 import AuthLayout from "./auth/AuthLayout";
 import AuthGuard from "./auth/AuthGuard";
 import LoginPage from "./auth/LoginPage";
@@ -12,23 +11,21 @@ import IdTokenPage from "./auth/IdTokenPage";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<AuthLayout />}>
-          <Route path={Path.Login} element={<LoginPage />} />
-          <Route path={Path.Auth} element={<IdTokenPage />} />
-        </Route>
+    <Routes>
+      <Route element={<AuthLayout />}>
+        <Route path={Path.Login} element={<LoginPage />} />
+        <Route path={Path.Auth} element={<IdTokenPage />} />
+      </Route>
 
-        <Route element={<Layout />}>
-          <Route path={Path.Index} element={<IndexPage />} />
+      <Route element={<Layout />}>
+        <Route path={Path.Index} element={<IndexPage />} />
 
-          <Route element={<AuthGuard />}>
-            <Route path={Path.BoardList} element={<BoardList />} />
-            <Route path={Path.CurrBoard} element={<CurrBoard />} />
-          </Route>
+        <Route element={<AuthGuard />}>
+          <Route path={Path.BoardList} element={<BoardList />} />
+          <Route path={Path.CurrBoard} element={<CurrBoard />} />
         </Route>
-      </Routes>
-    </AuthProvider>
+      </Route>
+    </Routes>
   );
 };
 

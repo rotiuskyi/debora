@@ -1,21 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import { Path } from "../routePath";
-import { useAuth } from "./authContext";
+import { getAccount } from "./authStorage";
+import { setAccount } from "./authStorage";
 
 const AuthStatus = () => {
-  let auth = useAuth();
   let navigate = useNavigate();
+  const account = getAccount();
 
-  if (!auth.user) {
+  if (!account?.user_email) {
     return <p>You are not logged in.</p>;
   }
 
   return (
     <div>
-      Welcome {auth.user}!{" "}
+      Welcome {account.user_name || account.user_email}!{" "}
       <button
         onClick={() => {
-          auth.signout(() => navigate(Path.Index));
+          // TODO: create some kind of signOut
+          setAccount("")
+          navigate(Path.Index)
         }}
       >
         Sign out
