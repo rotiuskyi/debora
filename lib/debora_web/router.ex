@@ -25,6 +25,14 @@ defmodule DeboraWeb.Router do
       put "/:id", BoardController, :update
       delete "/:id", BoardController, :delete
     end
+
+    scope "/devices" do
+      pipe_through :auth
+
+      post "/", DeviceController, :create
+      put "/:id", DeviceController, :update
+      delete "/:id", DeviceController, :delete
+    end
   end
 
   # Enable LiveDashboard in development
