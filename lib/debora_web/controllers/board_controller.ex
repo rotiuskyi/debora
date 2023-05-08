@@ -27,6 +27,26 @@ defmodule DeboraWeb.BoardController do
     send_resp(conn, 200, boards)
   end
 
+  def one(conn, params) do
+    subject = conn.assigns.auth_subject
+    %{"id" => id} = params
+    board_id = String.to_integer(id)
+
+    board =
+      from(b in Board,
+        join: ab in AccountBoard,
+        on: b.id == ab.board_id,
+        join: a in Account,
+        on: ab.account_subject == a.subject,
+        where: b.id == ^board_id and ab.account_subject == ^subject,
+        preload: [:devices]
+      )
+      |> Repo.one!()
+      |> Jason.encode!()
+
+    send_resp(conn, 200, board)
+  end
+
   def create(conn, params) do
     subject = conn.assigns.auth_subject
 
@@ -42,16 +62,41 @@ defmodule DeboraWeb.BoardController do
     send_resp(conn, 201, board)
   end
 
-  def delete(conn, %{"id" => idParam}) do
-    id = String.to_integer(idParam)
+  def update(conn, params) do
+    subject = conn.assigns.auth_subject
+    %{"id" => id} = params
+    board_id = String.to_integer(id)
+
+    can_update =
+      from(
+        ab in AccountBoard,
+        where: ab.account_subject == ^subject and ab.board_id == ^board_id
+      )
+      |> Repo.exists?()
+
+    if can_update do
+      board =
+        %Board{id: board_id}
+        |> Board.changeset(params)
+        |> Repo.update!()
+        |> Jason.encode!()
+
+      send_resp(conn, 200, board)
+    end
+
+    send_resp(conn, 404, "Board Not Found")
+  end
+
+  def delete(conn, %{"id" => id}) do
+    board_id = String.to_integer(id)
 
     {:ok, board} =
       Repo.transaction(fn ->
-        from(ab in AccountBoard, where: ab.board_id == ^id)
+        from(ab in AccountBoard, where: ab.board_id == ^board_id)
         |> Repo.one!()
         |> Repo.delete!()
 
-        %Board{id: id, devices: []}
+        %Board{id: board_id, devices: []}
         |> Repo.delete!()
         |> Jason.encode!()
       end)

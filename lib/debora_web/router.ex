@@ -20,7 +20,9 @@ defmodule DeboraWeb.Router do
       pipe_through :auth
 
       get "/", BoardController, :all
+      get "/:id", BoardController, :one
       post "/", BoardController, :create
+      put "/:id", BoardController, :update
       delete "/:id", BoardController, :delete
     end
   end
