@@ -4,24 +4,18 @@ Elixir/Phoenix (backend) and React (frontend) application.
 
 ## React
 
-React app stuff placed to `webui` directory. To get started developing go to that directory and run:
+React app stuff placed to `webui` directory. To get started developing you have to install `docker` and `compose` plugin.
+
+Then just run:
 ```
-npm i
+docker compose up -d
 ```
-Take a look at `webui/package.json` for available `scripts`.
+For older versions:
+```
+docker-compose up -d
+```
 
-## Phoenix
-
-To start your Phoenix server:
-
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-### Learn more
+### Learn more (Phoenix)
 
   * Official website: https://www.phoenixframework.org/
   * Guides: https://hexdocs.pm/phoenix/overview.html

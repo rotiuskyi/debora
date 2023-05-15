@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :debora, Debora.Repo,
-  hostname: "localhost",
+  hostname: System.get_env("PGHOST"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

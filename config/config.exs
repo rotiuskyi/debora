@@ -13,8 +13,8 @@ config :debora,
 
 # Configure your database
 config :debora, Debora.Repo,
-  database: System.get_env("PGDATABASE"),
   port: System.get_env("PGPORT"),
+  database: System.get_env("PGDATABASE"),
   username: System.get_env("PGUSER"),
   password: System.get_env("PGPASSWORD")
 

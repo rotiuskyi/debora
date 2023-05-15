@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+  # Main database
   postgres:
     image: postgres
     container_name: ${PGDATABASE}
@@ -12,12 +13,50 @@ services:
     ports:
       - ${PGPORT}:5432
 
+  # Reverse-proxy for backend and frontend servers
   nginx:
     image: nginx
-    container_name: debora_nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./priv/cert:/etc/nginx/ssl
-      - ./webui/dist:/usr/share/nginx/html
+      - ./priv/cert/:/etc/nginx/ssl/
+      - ./webui/dist/:/usr/share/nginx/html/
     ports:
       - 443:443
+    depends_on:
+      - backend
+      - frontend
+
+  backend:
+    image: elixir
+    volumes:
+      - ./:/srv/debora/
+    env_file:
+      - ./env/.env.dev
+    depends_on:
+      - postgres
+    command:
+      - bash
+      - -c
+      - |
+        cd /srv/debora/
+        PGHOST=postgres
+        PGPORT=5432
+        mix local.hex --force
+        mix ecto.migrate
+        mix phx.server
+
+  frontend:
+    image: node
+    volumes:
+      - ./webui/:/srv/debora/
+      - ./env/:/srv/debora/env/
+    environment:
+      - VITE_CLIENT_ID=$VITE_CLIENT_ID
+    depends_on:
+      - backend
+    command:
+      - bash
+      - -c
+      - |
+        cd /srv/debora/
+        npm run dev
