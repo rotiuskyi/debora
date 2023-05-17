@@ -19,11 +19,3 @@ docker compose up -d
 ```
 docker-compose up -d
 ```
-
-### Learn more (Phoenix)
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
