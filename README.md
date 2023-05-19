@@ -1,10 +1,10 @@
 # Debora
 
-Elixir/Phoenix (backend) and React (frontend) application.
+Device board for embedded development collaboration
 
 ## React
 
-React app stuff placed to `webui` directory. To get started developing you have to:
+React app stuff is located in `webui` directory. To get started developing you have to:
 - install `docker` and `compose` plugin
 - add environment variables using one of the template file from `./env/` directory (copy, rename, set missing variables)
 - read env variables e.g. (use `Bash` or `Git Bash` on Windows)
