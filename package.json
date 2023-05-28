@@ -8,6 +8,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@fastify/env": "^4.2.0",
+    "@fastify/jwt": "^6.7.1",
     "@fastify/postgres": "^5.2.0",
     "fastify": "^4.17.0"
   },
