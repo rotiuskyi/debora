@@ -22,41 +22,40 @@ services:
       - ./webui/dist/:/usr/share/nginx/html/
     ports:
       - 443:443
-    depends_on:
-      - backend
-      - frontend
+    # depends_on:
+    #   - backend
+    #   - frontend
+    # backend:
+    #   image: elixir
+    #   volumes:
+    #     - ./:/srv/debora/
+    #   env_file:
+    #     - ./env/.env.dev
+    #   depends_on:
+    #     - postgres
+    #   command:
+    #     - bash
+    #     - -c
+    #     - |
+    #       cd /srv/debora/
+    #       PGHOST=postgres
+    #       PGPORT=5432
+    #       mix local.hex --force
+    #       mix ecto.migrate
+    #       mix phx.server
 
-  backend:
-    image: elixir
-    volumes:
-      - ./:/srv/debora/
-    env_file:
-      - ./env/.env.dev
-    depends_on:
-      - postgres
-    command:
-      - bash
-      - -c
-      - |
-        cd /srv/debora/
-        PGHOST=postgres
-        PGPORT=5432
-        mix local.hex --force
-        mix ecto.migrate
-        mix phx.server
-
-  frontend:
-    image: node
-    volumes:
-      - ./webui/:/srv/debora/
-      - ./env/:/srv/debora/env/
-    environment:
-      - VITE_CLIENT_ID=$VITE_CLIENT_ID
-    depends_on:
-      - backend
-    command:
-      - bash
-      - -c
-      - |
-        cd /srv/debora/
-        npm run dev
+    # frontend:
+    #   image: node
+    #   volumes:
+    #     - ./webui/:/srv/debora/
+    #     - ./env/:/srv/debora/env/
+    #   environment:
+    #     - VITE_CLIENT_ID=$VITE_CLIENT_ID
+    #   depends_on:
+    #     - backend
+    #   command:
+    #     - bash
+    #     - -c
+    #     - |
+    #       cd /srv/debora/
+    #       npm run dev

@@ -4,9 +4,11 @@ const pg = require("@fastify/postgres");
 const swagger = require("@fastify/swagger");
 const swaggerUi = require("@fastify/swagger-ui");
 const schema = require("./lib/envSchema");
+const authPlugin = require("./lib/auth/authPlugin");
 const defaultRoutes = require("./lib/default/defaultRoutes");
-const accountRoutes = require("./lib/account/accountRoutes");
 const authRoutes = require("./lib/auth/authRoutes");
+const accountRoutes = require("./lib/account/accountRoutes");
+const boardsRoutes = require("./lib/boards/boardsRoutes");
 
 const env = process.env;
 
@@ -22,6 +24,7 @@ fastify.register(fastifyEnv, {
     debug: true,
   }
 });
+
 fastify.register(pg, {
   host: "127.0.0.1", // TODO, use docker container
   port: env.PGPORT,
@@ -29,14 +32,18 @@ fastify.register(pg, {
   user: env.PGUSER,
   password: env.PGPASSWORD
 });
+
 fastify.register(swagger);
 fastify.register(swaggerUi, {
   routePrefix: "/api"
 });
 
+fastify.register(authPlugin);
+
 registerRoutes(fastify, defaultRoutes);
 registerRoutes(fastify, accountRoutes);
 registerRoutes(fastify, authRoutes);
+registerRoutes(fastify, boardsRoutes);
 
 // Run the server!
 fastify.listen({ host: "0.0.0.0", port: "4000" }, handleListen);
