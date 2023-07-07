@@ -1,16 +1,19 @@
 const Fastify = require("fastify");
+const fp = require("fastify-plugin");
 const fastifyEnv = require("@fastify/env");
 const pg = require("@fastify/postgres");
 const swagger = require("@fastify/swagger");
 const swaggerUi = require("@fastify/swagger-ui");
 const schema = require("./lib/envSchema");
 const authPlugin = require("./lib/auth/authPlugin");
-const defaultRoutes = require("./lib/default/defaultRoutes");
 const authRoutes = require("./lib/auth/authRoutes");
-const accountRoutes = require("./lib/account/accountRoutes");
-const boardsRoutes = require("./lib/boards/boardsRoutes");
+
+const account = require("./lib/account");
+const boards = require("./lib/boards");
+// const boardsRoutes = require("./lib/boards/boardsRoutes");
 
 const env = process.env;
+const routePrefix = "/api";
 
 const fastify = Fastify({
   logger: true
@@ -35,15 +38,19 @@ fastify.register(pg, {
 
 fastify.register(swagger);
 fastify.register(swaggerUi, {
-  routePrefix: "/api"
+  routePrefix
 });
 
 fastify.register(authPlugin);
 
-registerRoutes(fastify, defaultRoutes);
-registerRoutes(fastify, accountRoutes);
-registerRoutes(fastify, authRoutes);
-registerRoutes(fastify, boardsRoutes);
+const routeOpts = {
+  prefix: routePrefix
+};
+
+fastify.register(authRoutes, routeOpts);
+fastify.register(account, routeOpts);
+fastify.register(boards, routeOpts);
+// fastify.register(boardsRoutes, routeOpts);
 
 // Run the server!
 fastify.listen({ host: "0.0.0.0", port: "4000" }, handleListen);
@@ -65,10 +72,4 @@ function getEnvFilename() {
     default:
       return ".env.dev"
   }
-}
-
-function registerRoutes(fastify, routes) {
-  fastify.register(routes, {
-    prefix: "/api"
-  });
 }
