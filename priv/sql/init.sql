@@ -1,5 +1,5 @@
 CREATE TABLE "account_boards"(
-    "id" BIGINT NOT NULL,
+    "id" bigserial NOT NULL,
     "account" VARCHAR(255) NOT NULL,
     "board" BIGINT NOT NULL
 );
@@ -20,7 +20,7 @@ COMMENT
 ON COLUMN
     "accounts"."id" IS 'id_token subject given by the identity provider';
 CREATE TABLE "devices"(
-    "id" BIGINT NOT NULL,
+    "id" bigserial NOT NULL,
     "title" TEXT NOT NULL,
     "board" BIGINT NOT NULL
 );
@@ -29,7 +29,7 @@ ALTER TABLE
 CREATE INDEX "devices_board_index" ON
     "devices"("board");
 CREATE TABLE "boards"(
-    "id" BIGINT NOT NULL,
+    "id" bigserial NOT NULL,
     "title" TEXT NOT NULL
 );
 ALTER TABLE

@@ -12,7 +12,7 @@ const IdTokenPage = () => {
     const idToken = params.get("id_token");
     // then remove it from the url
     setParams();
-    fetch("/api/auth/account", {
+    fetch("/api/account", {
       headers: { "Authorization": `Bearer ${idToken}` }
     })
       .then(res => res.text())
