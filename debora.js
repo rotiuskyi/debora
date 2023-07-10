@@ -11,7 +11,6 @@ const fastify = Fastify({
   logger: true
 });
 
-// Register infrastracture plugins
 fastify.register(fastifyEnv, {
   schema: require("./lib/envSchema"),
   dotenv: {
