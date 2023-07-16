@@ -1,7 +1,6 @@
 version: '3'
 
 services:
-  # Main database
   postgres:
     image: postgres
     container_name: ${PGDATABASE}
@@ -15,7 +14,7 @@ services:
     ports:
       - ${PGPORT}:5432
 
-  # Reverse-proxy for backend and frontend servers
+  # Reverse proxy for backend servers
   nginx:
     image: nginx
     volumes:
