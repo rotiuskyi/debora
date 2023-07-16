@@ -22,5 +22,5 @@ docker-compose up -d
 
 ## Dump db
 ```bash
-docker exec -i debora_dev_db /bin/bash -c "PGUSER=<pg_user> PGPASSWORD=<pg_password> pg_dump debora_dev_db" > "./priv/pg/dump/$(date +"%Y_%m_%d_%I_%M_%S%p").sql
+docker exec -i debora_dev /bin/bash -c "PGUSER=<pg_user> PGPASSWORD=<pg_password> pg_dump debora_dev" > "./priv/sql/dump/$(date +"%Y_%m_%d_%I_%M_%S%p").sql
 ```
