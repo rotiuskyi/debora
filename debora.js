@@ -4,34 +4,43 @@ const pg = require("@fastify/postgres");
 const swagger = require("@fastify/swagger");
 const swaggerUi = require("@fastify/swagger-ui");
 
-const env = process.env;
+const {
+  NODE_ENV,
+  PGPORT,
+  PGDATABASE,
+  PGUSER,
+  PGPASSWORD,
+} = process.env;
 const routePrefix = "/api";
 
 const fastify = Fastify({
   logger: true
 });
 
+// Register environment variables, add schemas
 fastify.register(fastifyEnv, {
-  schema: require("./lib/envSchema"),
+  schema: require("./lib/@schema/envSchema.json"),
   dotenv: {
-    path: `${__dirname}/env/${getEnvFilename()}`,
+    path: getEnvFilePath(),
     debug: true,
   }
 });
+fastify.addSchema(require("./lib/@schema/withAuthorization.json"));
 
+// Register infrastructure plugins
 fastify.register(pg, {
   host: "127.0.0.1",
-  port: env.PGPORT,
-  database: env.PGDATABASE,
-  user: env.PGUSER,
-  password: env.PGPASSWORD
+  port: PGPORT,
+  database: PGDATABASE,
+  user: PGUSER,
+  password: PGPASSWORD
 });
-
 fastify.register(swagger);
 fastify.register(swaggerUi, {
   routePrefix
 });
 
+// Register authorization plugin
 fastify.register(require("./lib/auth/authPlugin"));
 
 // Register repositories
@@ -56,14 +65,19 @@ function handleListen(err, address) {
   }
 }
 
-function getEnvFilename() {
-  switch (process.env.NODE_ENV) {
+function getEnvFilePath() {
+  const base = `${__dirname}/env/`;
+  let suffix = "";
+
+  switch (NODE_ENV) {
     case "prod":
-      return ".env.prod"
+      suffix = ".env.prod";
     case "test":
-      return ".env.test"
+      suffix = ".env.test";
     case "dev":
     default:
-      return ".env.dev"
+      suffix = ".env.dev";
   }
+
+  return base + suffix;
 }
