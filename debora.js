@@ -19,13 +19,15 @@ const fastify = Fastify({
 
 // Register environment variables, add schemas
 fastify.register(fastifyEnv, {
-  schema: require("./lib/@schema/envSchema.json"),
+  schema: require("./lib/@schema/EnvSchema.json"),
   dotenv: {
     path: getEnvFilePath(),
     debug: true,
   }
 });
-fastify.addSchema(require("./lib/@schema/withAuthorization.json"));
+fastify.addSchema(require("./lib/@schema/WithAuthorization.json"));
+fastify.addSchema(require("./lib/@schema/Device.json"));
+fastify.addSchema(require("./lib/@schema/Board.json"));
 
 // Register infrastructure plugins
 fastify.register(pg, {
