@@ -26,8 +26,9 @@ fastify.register(fastifyEnv, {
   }
 });
 fastify.addSchema(require("./lib/@schema/WithAuthorization.json"));
-fastify.addSchema(require("./lib/@schema/Device.json"));
+fastify.addSchema(require("./lib/@schema/Account.json"));
 fastify.addSchema(require("./lib/@schema/Board.json"));
+fastify.addSchema(require("./lib/@schema/Device.json"));
 
 // Register infrastructure plugins
 fastify.register(pg, {

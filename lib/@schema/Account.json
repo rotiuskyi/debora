@@ -1,0 +1,21 @@
+{
+  "$id": "Account",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "picture": {
+      "type": "string"
+    }
+  }
+}
