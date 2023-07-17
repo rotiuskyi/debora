@@ -2,10 +2,10 @@
   "$id": "WithAuthorization",
   "type": "object",
   "required": [
-    "Authorization"
+    "authorization"
   ],
   "properties": {
-    "Authorization": {
+    "authorization": {
       "type": "string"
     }
   }
