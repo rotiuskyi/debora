@@ -8,6 +8,13 @@
     "title": {
       "type": "string"
     },
+    "owner": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true
+    },
     "devices": {
       "type": "array",
       "items": {
