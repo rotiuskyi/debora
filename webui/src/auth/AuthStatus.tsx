@@ -13,7 +13,7 @@ const AuthStatus = () => {
 
   return (
     <div>
-      Welcome {account.user_name || account.user_email}!{" "}
+      {account.user_name || account.user_email}
       <button
         onClick={() => {
           // TODO: create some kind of signOut
