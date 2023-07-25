@@ -65,7 +65,7 @@ const BoardList = () => {
       <ul>
         {boards.map((board) => (
           <li key={(board as any).id}>
-            <pre>
+            <pre className="text-blue-600">
               <code>
                 {JSON.stringify(board)}
               </code>
