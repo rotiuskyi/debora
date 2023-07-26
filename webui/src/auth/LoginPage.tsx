@@ -19,10 +19,12 @@ const LoginPage = () => {
   setPathToReturn(pathToReturn);
 
   return (
-    <div>
-      <p>You must log in to view the page at {pathToReturn}</p>
+    <div className="border rounded mt-12 mx-auto w-[400px] p-6">
+      <h3>You must log in to view the page at
+        <span className="text-blue-500"> {pathToReturn}</span>
+      </h3>
       <form onSubmit={handleLoginWithGoogle}>
-        <button type="submit">Login with Google</button>
+        <button type="submit" className="text-blue-800">Login with Google</button>
       </form>
     </div>
   );
