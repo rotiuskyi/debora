@@ -1,12 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
 import AuthStatus from "../auth/AuthStatus";
 import { Path } from "../routePath";
-import Header from "./Header";
 
 const Layout = () => {
   return (
     <>
-      <Header />
       <div className="flex col h-full">
         <div className="min-w-[250px] border-r border-gray-300 p-2">
           <ul>
