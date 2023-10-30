@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Path } from "../routePath";
+import { Path } from "../@infra.const/Path";
 import { getAccount } from "./authStorage";
 import { setAccount } from "./authStorage";
 

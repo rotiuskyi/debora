@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { Path } from "../routePath";
+import { Path } from "../@infra.const/Path";
 import { getAccount } from "./authStorage";
 
 const AuthGuard = () => {

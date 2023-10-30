@@ -1,4 +1,4 @@
-type RequestOptions = Omit<RequestInit, "method">;
+import type { HttpClient, RequestOptions } from "../@store/interface";
 
 interface BeforeHook {
   (init: RequestInit): RequestInit;
@@ -22,7 +22,7 @@ function httpClientFactory({
   initRequestOptions,
   after,
   before = identity
-}: HttpClientOptions = {}) {
+}: HttpClientOptions = {}): HttpClient {
   function requestFactory(method: Method) {
     return (uri: string, requestOptions: RequestOptions = {}) => {
       const init: RequestInit = before({ ...initRequestOptions, ...requestOptions, method });

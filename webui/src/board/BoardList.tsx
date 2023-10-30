@@ -1,18 +1,14 @@
 import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 import { getIdToken } from "../auth/authStorage";
+import { useDependencies } from "../DependencyProvider";
+import { fetchBoards, newBoard } from "../@store/actionCreators/boardActionCreators";
 
 const BoardList = () => {
-  const [boards, setBoards] = useState<any[]>([]);
+  const { store, useSelectiveSubscription } = useDependencies();
+  const boards = useSelectiveSubscription(store, state => state.boards) || [];
 
   useEffect(() => {
-    fetch("/api/boards", {
-      headers: {
-        Authorization: `Bearer ${getIdToken()}`
-      }
-    })
-      .then(res => res.json())
-      .then(boards => setBoards(boards))
-      .catch(err => console.error(err));
+    store.dispatch(fetchBoards);
   }, []);
 
   const [title, setTitle] = useState("");
@@ -22,33 +18,22 @@ const BoardList = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-
-    fetch("/api/boards", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${getIdToken()}`
-      },
-      body: JSON.stringify({ title })
-    })
-      .then(res => res.json())
-      .then(newBoard => setBoards(boards => [...boards, newBoard]))
-      .catch(err => console.error(err));
+    store.dispatch(newBoard(title));
   };
 
-  const handleDelete = (event: MouseEvent) => {
-    const btn = event.target as HTMLButtonElement;
+  // const handleDelete = (event: MouseEvent) => {
+  //   const btn = event.target as HTMLButtonElement;
 
-    fetch(`/api/boards/${btn.name}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${getIdToken()}`
-      },
-    })
-      .then(res => res.json())
-      .then(() => setBoards(boards.filter(board => board.id != btn.name)))
-      .catch(err => console.error(err));
-  };
+  //   fetch(`/api/boards/${btn.name}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Authorization": `Bearer ${getIdToken()}`
+  //     },
+  //   })
+  //     .then(res => res.json())
+  //     .then(() => setBoards(boards.filter(board => board.id != btn.name)))
+  //     .catch(err => console.error(err));
+  // };
 
   return (
     <div>
@@ -70,7 +55,7 @@ const BoardList = () => {
                 {JSON.stringify(board)}
               </code>
             </pre>
-            <button name={(board as any).id} onClick={handleDelete}>Delete</button>
+            {/* <button name={(board as any).id} onClick={handleDelete}>Delete</button> */}
           </li>)
         )}
       </ul>
